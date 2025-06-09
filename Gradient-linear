@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 1. Data
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([3, 5, 7, 9, 11])  # Line: y = 2x + 1
+
+# 2. Initialize parameters
+w = 0.0
+b = 0.0
+alpha = 0.01
+epochs = 1000
+m = len(x)
+
+# === BEFORE TRAINING: plot original data and initial line ===
+plt.figure(figsize=(10, 4))
+
+plt.subplot(1, 2, 1)
+plt.scatter(x, y, color='blue', label='Original Data')
+plt.plot(x, w * x + b, color='red', label='Initial Prediction Line')
+plt.title("Before Training")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+
+# 3. Gradient Descent Training Loop
+for _ in range(epochs):
+    y_pred = w * x + b
+    dw = (-2/m) * np.sum((y - y_pred) * x)
+    db = (-2/m) * np.sum(y - y_pred)
+    w = w - alpha * dw
+    b = b - alpha * db
+
+# === AFTER TRAINING: plot final fitted line ===
+plt.subplot(1, 2, 2)
+plt.scatter(x, y, color='blue', label='Original Data')
+plt.plot(x, w * x + b, color='green', label='Fitted Line')
+plt.title("After Training")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+# Print final model
+print(f"\nFinal Model: y = {w:.2f} * x + {b:.2f}")
